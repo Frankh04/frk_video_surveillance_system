@@ -1,7 +1,7 @@
 ESX = nil
 
--- Posizione con i nomi di tutte le telecamere
-Telecamere = {
+-- Location with the names of all cameras
+cameras = {
 	[1] =  { ['x'] = 411.43,['y'] = -1032.6,['z'] = 32.68,['h'] = 298.86, ['info'] = ' Garage esterno', ["recent"] = false },
 	[2] =  { ['x'] = 425.34,['y'] = -948.35,['z'] = 38.04,['h'] = 163.96, ['info'] = ' Ingresso principale', ["recent"] = false },
 	[3] =  { ['x'] = 509.02,['y'] = -1021.61,['z'] = 30.99,['h'] = 88.15, ['info'] = ' Ingresso sul retro', ["recent"] = false },
@@ -24,7 +24,7 @@ Telecamere = {
 }
 
 
--- Posizione di dove si trovano i marker
+-- Location of where the markers are located
 Computer = {
     { x = 442.95,  y = -998.87,  z = 33.97},
 	{ x = 443.27,  y = -996.53,  z = 33.97}
@@ -160,15 +160,15 @@ Citizen.CreateThread(function ()
       	end
 
 		if inCam then
-			local rotazione = GetCamRot(camAttuale, 2)
-			if IsControlPressed(1, 175) then --destra
-				SetCamRot(camAttuale, rotazione.x, 0.0, rotazione.z + 0.7, 2)
-			elseif IsControlPressed(1, 174) then -- sinistra
-				SetCamRot(camAttuale, rotazione.x, 0.0, rotazione.z - 0.7, 2)
-			elseif IsControlPressed(1, 172) then -- sopra
-				SetCamRot(camAttuale, rotazione.x + 0.7, 0.0, rotazione.z, 2)
-			elseif IsControlPressed(1, 173) then -- sotto
-				SetCamRot(camAttuale, rotazione.x - 0.7, 0.0, rotazione.z, 2)
+			local rotation = GetCamRot(camAttuale, 2)
+			if IsControlPressed(1, 175) then --right
+				SetCamRot(camAttuale, rotation.x, 0.0, rotation.z + 0.7, 2)
+			elseif IsControlPressed(1, 174) then -- left
+				SetCamRot(camAttuale, rotation.x, 0.0, rotation.z - 0.7, 2)
+			elseif IsControlPressed(1, 172) then -- on
+				SetCamRot(camAttuale, rotation.x + 0.7, 0.0, rotation.z, 2)
+			elseif IsControlPressed(1, 173) then -- under
+				SetCamRot(camAttuale, rotation.x - 0.7, 0.0, rotation.z, 2)
 			end
 		end
 	end
@@ -183,13 +183,13 @@ function Menu()
   
     local elements = {}
 
-	for i=1, #Telecamere, 1 do
-		table.insert(elements, { label = Telecamere[i]["info"], value = Telecamere[i] })
+	for i=1, #cameras, 1 do
+		table.insert(elements, { label = cameras[i]["info"], value = cameras[i] })
 	end
     ESX.UI.Menu.CloseAll()
   
     ESX.UI.Menu.Open(
-        'default', GetCurrentResourceName(), 'frk_videosorveglianza',
+        'default', GetCurrentResourceName(), 'frk_video_surveillance_system',
         {
             title    = 'Videosorveglianza',
             elements = elements
@@ -221,11 +221,11 @@ function Menu()
   
 end
 
-AddEventHandler('frk_videosorveglianza:dentromarker', function(zone)
+AddEventHandler('frk_video_surveillance_system:dentromarker', function(zone)
     CurrentAction     = 'menu'
 end)
   
-AddEventHandler('frk_videosorveglianza:uscitomarker', function(zone)
+AddEventHandler('frk_video_surveillance_system:uscitomarker', function(zone)
     CurrentAction = nil
     ESX.UI.Menu.CloseAll()
 	if inCam then
