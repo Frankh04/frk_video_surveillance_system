@@ -1,6 +1,6 @@
 # frk_videosorveglianza
 
-Fully customizable video surveillance system
+Fully customizable video surveillance system for ESX
 
 ## Script functions:
 - Configurable camera positions
